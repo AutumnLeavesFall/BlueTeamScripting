@@ -14,7 +14,7 @@ user_list=(
   "bartallen" "whiteteam"
 )
 
-
+# reads each line in the /etc/passwd file, takes the first 2 items and labels them as variables username and pass
 while IFS=':' read -r username pass _; do
     echo "~~~~~"
     username=$(echo "$username" | tr -d '[:space:]')
@@ -25,7 +25,11 @@ while IFS=':' read -r username pass _; do
         continue
     fi
 
+    #if the username matches something in the approved user list, say it was approved and move on
+    if printf "%s\n" "${user_list[@]}" | grep -qxF "$username"; then
+        echo "'$username' is approved."
 
+    
 
 # Run using the /etc/passwd file
 done < /etc/passwd
