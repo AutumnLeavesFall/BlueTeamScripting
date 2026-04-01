@@ -12,6 +12,7 @@ Goes through all users, and if it's an approved user, asks for a new password. I
 - restrict file/directory perms based on user groups
 - list running processes with given keywords (eg "malware")
     - currently lists all and asks to kill based on pid's
+    - will modify to first ask whether to list all or list based on keyword
 
 
 ## Scripts to Make
