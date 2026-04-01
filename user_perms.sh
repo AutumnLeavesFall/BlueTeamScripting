@@ -1,5 +1,7 @@
 #!/bin/bash
 ### NEEDS TESTING ###
+### NEEDS ERROR HANDLING ###
+
 
 # Check if running as root
 if [ "$(id -u)" -ne 0 ]; then
