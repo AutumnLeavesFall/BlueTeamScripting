@@ -21,13 +21,11 @@ echo "\nListing existing user groups..."
 tail /etc/group
 # remove unrecognized group(s)
 while true do
-    echo "Do you need to remove a group? y/n"
-    read rmgroupq
-    if rmgroupq == "n"; then
+    echo "What group would you like to remove? q to quit"
+    read rmgroupname
+    if rmgroupname == "q"; then
         break
     fi
-    echo "What group would you like to remove?"
-    read rmgroupname
     groupdel groupname
 done
     # no: create user groups for preferred, restricted, and blocked users
