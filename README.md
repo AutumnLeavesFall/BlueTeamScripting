@@ -7,14 +7,14 @@
 Goes through all users, and if it's an approved user, asks for a new password. If the user isn't approved, it asks whether to allow the user, then either removes it or changes it's password. This is in-progress as change_users.sh
 
 
+## In Progress & Need Testing
 - make a user group for the users you need for the comp
 - restrict file/directory perms based on user groups
-
-## Script(s) with Drafted Plans/Pseudocode
+- list running processes with given keywords (eg "malware")
+    - currently lists all and asks to kill based on pid's
 
 
 ## Scripts to Make
-- list running processes with given keywords (eg "malware")
 - set up firewall rules (varies per comp and the organizer's rules but always important) - things like blocking IPs, blocking ports, and removing remote connections - specifically block basically everything but scored services
 - remove autoruns
 - backup important files
