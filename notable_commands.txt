@@ -3,3 +3,9 @@ bash -lixc exit 2>&1 | grep "source"
 
 # gets network connections, also lists the process if run as sudo, then can find the binary from the pid and figure out where it's being run from
 ss -tupn0
+
+# find files owned by a specific user
+find / -user <username> -ls
+
+# disable printing service (removing user creates security risk)
+sudo systemctl disable cups

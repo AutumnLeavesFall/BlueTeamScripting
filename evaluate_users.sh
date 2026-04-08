@@ -33,14 +33,24 @@ while IFS=':' read -r username pass uid gid gecos homedir loginshell; do
             echo "$sysaccrem"
             case $sysaccrem in
                 [Yy]* )
-                    echo "Removing $username..."
-                    deluser --remove-home $username
-                    if [ $? -eq 0 ]; then
-                        echo "User '$username' removed."
-                    else
-                        echo "Error removing user '$username'."
-                    fi
-                    break;
+                    read -p "Brick this account? y/n: " sysaccrem </dev/tty
+           echo "$sysaccrem"
+           case $sysaccrem in
+               [Yy]* )
+                   echo "Bricking $username..."
+                   usermod -L -s /sbin/nologin $username
+                   if [ $? -eq 0 ]; then
+                       pass
+                   else
+                       echo "Error locking user '$username'."
+                   fi
+                   chage -E 0 $username
+                   if [ $? -eq 0 ]; then
+                       echo "User '$username' expiration date bricked."
+                   else
+                       echo "Error expiring user '$username'."
+                   fi
+                   break;
                     ;;
                 [Nn]* )
                     echo "Skipping system account $username."

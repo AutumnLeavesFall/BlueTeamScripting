@@ -1,0 +1,8 @@
+Root - approve
+Daemon - approve - however manages background processes so monitor carefully
+Bin - unclear, probably fine to leave
+Sys - unclear but leave it
+Sync - approve - breaks ability to run files
+Games - REMOVE
+Man - manual and software updates
+Lp - print service, removing can create security risk
