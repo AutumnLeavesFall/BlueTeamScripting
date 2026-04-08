@@ -21,7 +21,7 @@ while IFS=':' read -r username pass uid gid gecos homedir loginshell; do
 
     echo "User login shell: $loginshell"
 
-    if [ "$loginshell" == "/usr/sbin/nologin" ]; then
+    if [ "$loginshell" == "/usr/sbin/nologin" ] || [ "$loginshell" == "/sbin/nologin" ]; then
         echo "User has no login shell."
     fi
 
@@ -34,17 +34,21 @@ while IFS=':' read -r username pass uid gid gecos homedir loginshell; do
 
         case $accappr in
             [Yy] )
-                echo "User '$username' is approved. Please change the password."
-                read -s -p "Enter new password for '$username': " new_pass </dev/tty
-                if [ -z "$new_pass" ]; then
-                    echo "Skipping password change."
-                    break
-                fi
-                echo "${username}:${new_pass}" | chpasswd
-                if [ $? -eq 0 ]; then
-                    echo "Password updated for ${username}."
+                if [ "$loginshell" == "/usr/sbin/nologin" ] || [ "$loginshell" == "/sbin/nologin" ]; then
+                    echo "User '$username' is approved. No login password to change."
                 else
-                    echo "Password update FAILED for ${username}."
+                    echo "User '$username' is approved. Please change the password."
+                    read -s -p "Enter new password for '$username': " new_pass </dev/tty
+                    if [ -z "$new_pass" ]; then
+                        echo "Skipping password change."
+                        break
+                    fi
+                    echo "${username}:${new_pass}" | chpasswd
+                    if [ $? -eq 0 ]; then
+                        echo "Password updated for ${username}."
+                    else
+                        echo "Password update FAILED for ${username}."
+                    fi
                 fi
                 break
                 ;;
