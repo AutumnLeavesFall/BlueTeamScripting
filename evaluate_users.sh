@@ -6,7 +6,7 @@ if [ "$(id -u)" -ne 0 ]; then
     exit 1
 fi
 
-# Allowed user list (borrowed from IRSeC 2025)
+# Allowed user list
 user_list=(
   "student"
 )
@@ -30,7 +30,6 @@ while IFS=':' read -r username pass uid gid gecos homedir loginshell; do
         while true; do
             
             read -p "Brick this account? y/n: " sysaccrem </dev/tty
-            echo "$sysaccrem"
             case $sysaccrem in                    
                [Yy]* )
                    echo "Bricking $username..."
