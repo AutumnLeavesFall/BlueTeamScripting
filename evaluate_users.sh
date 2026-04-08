@@ -21,8 +21,8 @@ while IFS=':' read -r username pass _; do
     if [ -z "$uid" ] || [ "$uid" -lt 1000 ]; then
         echo "UID:$uid indicates '$username' is a system account."
         # read -p "Remove this account? y/n" sysaccrem ## why aren't you working????? this is the recommended way to read user input, tf?????
-        echo "Remove this account? y/n"
-        read sysaccrem
+        # echo "Remove this account? y/n"
+        read -p "Remove this account? y/n: " sysaccrem </dev/tty
         echo "input: $sysaccrem"
 
         # ~~~~~
