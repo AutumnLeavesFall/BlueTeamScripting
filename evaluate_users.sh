@@ -20,16 +20,26 @@ while IFS=':' read -r username pass _; do
     uid=$(id -u "$username" 2>/dev/null)
     if [ -z "$uid" ] || [ "$uid" -lt 1000 ]; then
         echo "UID:$uid indicates '$username' is a system account."
-        read -p "Remove this account? y/n: " sysaccrem </dev/tty
-        echo "input: $sysaccrem"
 
-        # if [[sysaccrem == "y"]]; then
-        #     echo "Removing $username..."
-        #     # deluser --remove-home $username
-        #     # INSERT ERROR HANDLING
-        # else if [[sysaccrem == "n"]]; then
-        #     echo "Skipping system account $username."
-        # fi
+        # check whether to remove supposed system account (because you are still able set the uid of a new user to a value reserved for system accounts)
+        # plan to add list of known/expected system accounts with confirmation of nologin and no directory attached so less likely of an issue for redteam to impersonate a system account
+        while true; do
+            read -p "Remove this account? y/n: " sysaccrem </dev/tty
+            echo "$sysaccrem"
+            case $sysaccrem in
+                [Yy]* )
+                    echo "Removing $username..."
+                    break;
+                    ;;
+                [Nn]* )
+                    echo "Skipping system account $username."
+                    break;
+                    ;;
+                * )
+                    echo "Invalid response. Please try again"
+                    ;;
+            esac
+        done
         continue
     fi
 
@@ -38,7 +48,6 @@ while IFS=':' read -r username pass _; do
         echo "'$username' is approved."
         continue
     fi
-    #echo "$username"
 
 # Run using the /etc/passwd file
 done < /etc/passwd
