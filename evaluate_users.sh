@@ -27,7 +27,6 @@ while IFS=':' read -r username pass uid gid gecos homedir loginshell; do
         fi
 
         # check whether to remove supposed system account (because you are still able set the uid of a new user to a value reserved for system accounts)
-        # plan to add list of known/expected system accounts with confirmation of nologin and no directory attached so less likely of an issue for redteam to impersonate a system account
         while true; do
             
             read -p "Remove this account? y/n: " sysaccrem </dev/tty
@@ -53,7 +52,56 @@ while IFS=':' read -r username pass uid gid gecos homedir loginshell; do
     #if the username matches something in the approved user list, say it was approved and move on
     if printf "%s\n" "${user_list[@]}" | grep -qxF "$username"; then
         echo "'$username' is approved."
-        continue
+        echo "Please change password for $username."
+        read -s -p "Enter new password for '$username': " new_pass </dev/tty
+        echo
+
+        if [ -z "$new_pass" ]; then
+            echo "Skipping password change."
+            continue
+        fi
+
+        echo "${username}:${new_pass}" | chpasswd
+        if [ $? -eq 0 ]; then
+            echo "Password updated for ${username}."
+        else
+            echo "Password update FAILED for ${username}."
+        fi
+    else
+        echo "Unknown user '$username'."
+        while true; do
+            
+            read -p "Remove this account? y/n: " accrem </dev/tty
+            echo "$accrem"
+            case $accrem in
+                [Yy]* )
+                    echo "Removing $username..."
+                    # deluser --remove-home $username
+                    break
+                    ;;
+                [Nn]* )
+                    echo "Please change password for $username."
+                    read -s -p "Enter new password for '$username': " new_pass </dev/tty
+                    echo
+
+                    if [ -z "$new_pass" ]; then
+                        echo "Skipping password change."
+                        break
+                    fi
+
+                    echo "${username}:${new_pass}" | chpasswd
+                    if [ $? -eq 0 ]; then
+                        echo "Password updated for ${username}."
+                    else
+                        echo "Password update FAILED for ${username}."
+                    fi
+                    break
+                    ;;
+                * )
+                    echo "Invalid response. Please try again"
+                    ;;
+            esac
+        done
     fi
 
 # Run using the /etc/passwd file
