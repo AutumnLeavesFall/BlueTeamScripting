@@ -29,13 +29,9 @@ while IFS=':' read -r username pass uid gid gecos homedir loginshell; do
         # check whether to remove supposed system account (because you are still able set the uid of a new user to a value reserved for system accounts)
         while true; do
             
-            read -p "Remove this account? y/n: " sysaccrem </dev/tty
+            read -p "Brick this account? y/n: " sysaccrem </dev/tty
             echo "$sysaccrem"
-            case $sysaccrem in
-                [Yy]* )
-                    read -p "Brick this account? y/n: " sysaccrem </dev/tty
-           echo "$sysaccrem"
-           case $sysaccrem in
+            case $sysaccrem in                    
                [Yy]* )
                    echo "Bricking $username..."
                    usermod -L -s /sbin/nologin $username
