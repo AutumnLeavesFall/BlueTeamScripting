@@ -11,20 +11,24 @@ user_list=(
   "student"
 )
 
+# reads each line in the /etc/passwd file and labels each variable
 while IFS=':' read -r username pass uid gid gecos homedir loginshell; do
     echo "~~~~~"
     username=$(echo "$username" | tr -d '[:space:]')
 
+    # notify that user should be system account
     if [ -z "$uid" ] || [ "$uid" -lt 1000 ]; then
         echo "UID:$uid indicates '$username' is a system account."
     fi
 
     echo "User login shell: $loginshell"
 
+    # notify that user account has no login shell
     if [ "$loginshell" == "/usr/sbin/nologin" ] || [ "$loginshell" == "/sbin/nologin" ]; then
         echo "User has no login shell."
     fi
 
+    # ask whether to approve account
     while true; do
         if printf "%s\n" "${user_list[@]}" | grep -qxF "$username"; then
             accappr='y'
@@ -33,6 +37,7 @@ while IFS=':' read -r username pass uid gid gecos homedir loginshell; do
         fi
 
         case $accappr in
+            # if account is approved, change password if the user has login capabilities
             [Yy] )
                 if [ "$loginshell" == "/usr/sbin/nologin" ] || [ "$loginshell" == "/sbin/nologin" ]; then
                     echo "User '$username' is approved. No login password to change."
@@ -52,6 +57,8 @@ while IFS=':' read -r username pass uid gid gecos homedir loginshell; do
                 fi
                 break
                 ;;
+
+            # if the account is not approved, ask whether to brick (for accounts where removing causes problems) or delete
             [Nn] )
                 while true; do
                     read -p "Brick or delete '$username'? B/D: " usrstatus </dev/tty
@@ -59,12 +66,14 @@ while IFS=':' read -r username pass uid gid gecos homedir loginshell; do
                     case $usrstatus in
                         [Bb] )
                             echo "Bricking account '$username'..."
+                            # remove login capability
                             usermod -L -s /sbin/nologin $username
                             if [ $? -eq 0 ]; then
                                 echo "User '$username' has been locked."
                             else
                                 echo "Error locking user '$username'."
                             fi
+                            # set account expiration to the minimum date, Jan 1 2970
                             chage -E 0 $username
                             if [ $? -eq 0 ]; then
                                 echo "User '$username' set to expired."
@@ -75,6 +84,7 @@ while IFS=':' read -r username pass uid gid gecos homedir loginshell; do
                             ;;
                         [Dd] )
                             echo "Deleting user '$username'..."
+                            # remove user and their home directory
                             deluser --remove-home $username
                             if [ $? -eq 0 ]; then
                                 echo "User '$username' removed."
