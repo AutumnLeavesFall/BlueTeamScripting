@@ -19,13 +19,14 @@ while IFS=':' read -r username pass uid gid gecos homedir loginshell; do
     # Skip system accounts (UID < 1000)
     if [ -z "$uid" ] || [ "$uid" -lt 1000 ]; then
         echo "UID:$uid indicates '$username' is a system account."
-        if [["$loginshell" == *"nologin"]]; then
-                echo "User has no login shell."
-                echo "Skipping system account $username."
-                break
-            else
-                continue
-            fi
+        echo "User login shell: $loginshell"
+        # if ["$loginshell" == *"nologin"]; then # what is wrong with this line??? 
+        #         echo "User has no login shell."
+        #         echo "Skipping system account $username."
+        #         break
+        #     else
+        #         continue
+        #     fi
 
         # check whether to remove supposed system account (because you are still able set the uid of a new user to a value reserved for system accounts)
         # plan to add list of known/expected system accounts with confirmation of nologin and no directory attached so less likely of an issue for redteam to impersonate a system account
