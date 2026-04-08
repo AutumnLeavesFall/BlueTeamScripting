@@ -1,0 +1,1 @@
+bash -lixc exit 2>&1 | grep "source"
