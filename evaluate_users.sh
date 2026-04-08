@@ -2,7 +2,7 @@
 
 # Check if running as root
 if [ "$(id -u)" -ne 0 ]; then
-    echo "users.sh run fail"
+    echo "evaluate_users.sh run fail"
     exit 1
 fi
 
@@ -20,7 +20,7 @@ while IFS=':' read -r username pass uid gid gecos homedir loginshell; do
     if [ -z "$uid" ] || [ "$uid" -lt 1000 ]; then
         echo "UID:$uid indicates '$username' is a system account."
         echo "User login shell: $loginshell"
-        if [ "$loginshell" == "/usr/sbin/nologin" ]; then # what is wrong with this line??? 
+        if [ "$loginshell" == "/usr/sbin/nologin" ]; then
             echo "User has no login shell."
             echo "Skipping system account $username."
             continue
