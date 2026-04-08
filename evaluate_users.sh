@@ -12,23 +12,30 @@ user_list=(
 )
 
 # reads each line in the /etc/passwd file, takes the first 2 items and labels them as variables username and pass
-while IFS=':' read -r username pass _; do
+while IFS=':' read -r username pass uid gid gecos homedir loginshell; do
     echo "~~~~~"
     username=$(echo "$username" | tr -d '[:space:]')
 
     # Skip system accounts (UID < 1000)
-    uid=$(id -u "$username" 2>/dev/null)
     if [ -z "$uid" ] || [ "$uid" -lt 1000 ]; then
         echo "UID:$uid indicates '$username' is a system account."
 
         # check whether to remove supposed system account (because you are still able set the uid of a new user to a value reserved for system accounts)
         # plan to add list of known/expected system accounts with confirmation of nologin and no directory attached so less likely of an issue for redteam to impersonate a system account
         while true; do
+            if ["${loginshell//\//}" == "usrsbinnologin"]; then
+                echo "User has no login shell."
+                echo "Skipping system account $username."
+                break
+            else
+                continue
+            fi
             read -p "Remove this account? y/n: " sysaccrem </dev/tty
             echo "$sysaccrem"
             case $sysaccrem in
                 [Yy]* )
                     echo "Removing $username..."
+                    # deluser --remove-home $username
                     break;
                     ;;
                 [Nn]* )
