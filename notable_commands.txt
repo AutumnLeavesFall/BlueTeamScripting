@@ -1,4 +1,5 @@
 # lists all files being sources/executed during login shell creation
 bash -lixc exit 2>&1 | grep "source"
 
+# gets network connections, also lists the process if run as sudo, then can find the binary from the pid and figure out where it's being run from
 ss -tupn0
