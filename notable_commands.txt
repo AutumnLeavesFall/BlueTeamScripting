@@ -1,1 +1,2 @@
+# lists all files being sources/executed during login shell creation
 bash -lixc exit 2>&1 | grep "source"
