@@ -34,7 +34,12 @@ while IFS=':' read -r username pass uid gid gecos homedir loginshell; do
             case $sysaccrem in
                 [Yy]* )
                     echo "Removing $username..."
-                    # deluser --remove-home $username
+                    deluser --remove-home $username
+                    if [ $? -eq 0 ]; then
+                        echo "User '$username' removed."
+                    else
+                        echo "Error removing user '$username'."
+                    fi
                     break;
                     ;;
                 [Nn]* )
@@ -76,7 +81,12 @@ while IFS=':' read -r username pass uid gid gecos homedir loginshell; do
             case $accrem in
                 [Yy]* )
                     echo "Removing $username..."
-                    # deluser --remove-home $username
+                    deluser --remove-home $username
+                    if [ $? -eq 0 ]; then
+                        echo "User '$username' removed."
+                    else
+                        echo "Error removing user '$username'."
+                    fi
                     break
                     ;;
                 [Nn]* )
