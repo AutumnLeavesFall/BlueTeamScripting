@@ -1,6 +1,5 @@
 #!/bin/bash
-### NEEDS TESTING ###
-### NEEDS ERROR HANDLING ###
+### works, definitely ways to improve though.
 
 # Check if running as root
 if [ "$(id -u)" -ne 0 ]; then
@@ -16,11 +15,17 @@ ps aux
 while true; do
     echo "Enter the PID of the process you'd like to kill or q to quit:"
     read pidkill
-    if pidkill == "q"; then
+    if [ $pidkill == "q" ]; then
         break
     fi
-    kill -9 pidkill
-    # error handling needed
+    pname='' ps -p $pidkill -o comm=
+    echo "$pname"
+    kill $pidkill
+    if [ $? -eq 0 ]; then
+        echo "Process #$pid has been killed."
+    else
+        echo "Failed to kill process #$pid ($pname)."
+    fi
 done
 
 # possibly use top instead of ps aux? 
