@@ -1,4 +1,5 @@
 #!/bin/bash
+### REWRITTEN AS eval_users.sh due to excess code repetition. Needed restructuring
 
 # Check if running as root
 if [ "$(id -u)" -ne 0 ]; then
