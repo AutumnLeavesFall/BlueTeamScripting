@@ -19,6 +19,8 @@ while IFS=':' read -r username pass uid gid gecos homedir loginshell; do
     # notify that user should be system account
     if [ -z "$uid" ] || [ "$uid" -lt 1000 ]; then
         echo "UID:$uid indicates '$username' is a system account."
+    else
+        echo "$username"
     fi
 
     echo "User login shell: $loginshell"
@@ -84,6 +86,9 @@ while IFS=':' read -r username pass uid gid gecos homedir loginshell; do
                             ;;
                         [Dd] )
                             echo "Deleting user '$username'..."
+                            # list all files owned by user before deletion in a txt file to reference later
+                            touch files_from_$username.txt
+                            find / -user $username -ls -type f > files_from_$username.txt
                             # remove user and their home directory
                             deluser --remove-home $username
                             if [ $? -eq 0 ]; then
