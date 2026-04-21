@@ -1,24 +1,36 @@
 # BlueTeamScripting
-## Script(s) In Progress
-- change all passwords
-- disable all users not in a list that you can specify (to keep the users that are required)
-
-^These are being combined into one script which: 
-Goes through all users, and if it's an approved user, asks for a new password. If the user isn't approved, it asks whether to allow the user, then either removes it or changes it's password. This is in-progress as change_users.sh
-
-
-## In Progress & Need Testing
-- make a user group for the users you need for the comp
-- restrict file/directory perms based on user groups
-- list running processes with given keywords (eg "malware")
-    - currently lists all and asks to kill based on pid's
-    - will modify to first ask whether to list all or list based on keyword
+## Script(s) In Progress & Tested
+- eval_users.sh
+    - Iterates through all users
+    - Notifies if it's a system user based on UID
+    - Asks whether to approve user
+        - If approved, requests new user password
+        - If not, asks whether to brick (remove login and set user expiration date to the past, because removing certain system users can create vulnerabilities) or remove the user
+    - Post-UB Lockdown Goal: Modify so there's a list of known system users and what action to take with each one, because iterating through the system users was very time consuming
+- list_processes.sh
+    - Currently lists all running processes, asks for a PID, and attempts to kill that process
+    - Post-UB Lockdown Thoughts: it was easier to just run these commands manually. Need to modify so it has the ability to search for specific keywords and highlight high-cpu usage
 
 
-## Scripts to Make
+
+## Partial Completion, Need Testing
+- ssh_keys.sh
+    - Iterate through each key in ~/.ssh/authorized_keys (and known_hosts?) and ask whether to remove them
+    - Note: At both competitions I have competed in as of writing this, clearing the ssh keys has kept me from seeing a significant amount of Red Team's malware
+- user_group.sh
+    - Asks whether to run eval_users.sh
+    - Iterates through existing user groups and asks whether to remove them
+    - Goal: create user groups based on whether to allow/brick
+    - Use this to set recognized system users for goal with eval_users.sh
+- user_perms.sh
+    - recursively restrict user perms through directories
+    - Goal: use user_group.sh to simplify user labeling
+
+
+## Planned Scripts
 - set up firewall rules (varies per comp and the organizer's rules but always important) - things like blocking IPs, blocking ports, and removing remote connections - specifically block basically everything but scored services
     - need to learn how firewall is managed in bash
 - remove autoruns
     - need to learn where to access autoruns and what's necessary to remove based on how it's handled
 - backup important files
-- lower priority - set up some kind of logging for information
+- set up some kind of logging for information
