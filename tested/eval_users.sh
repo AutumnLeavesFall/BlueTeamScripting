@@ -2,7 +2,7 @@
 
 # Check if running as root
 if [ "$(id -u)" -ne 0 ]; then
-    echo "evaluate_users.sh run fail"
+    echo "eval_users.sh run fail"
     exit 1
 fi
 
