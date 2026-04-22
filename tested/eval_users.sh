@@ -75,7 +75,7 @@ while IFS=':' read -r username pass uid gid gecos homedir loginshell; do
                             else
                                 echo "Error locking user '$username'."
                             fi
-                            # set account expiration to the minimum date, Jan 1 2970
+                            # set account expiration to the minimum date, Jan 1 1970
                             chage -E 0 $username
                             if [ $? -eq 0 ]; then
                                 echo "User '$username' set to expired."
