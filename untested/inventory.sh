@@ -34,7 +34,12 @@ echo -e "\n~~~~~\n"
 
 
 # Admin Users
-echo "Admin Users"
+echo "Admin Users:"
+
+    #admin users label varies by linux distro
+getent group sudo | cut -d: -f4 
+getent group admin | cut -d: -f4
+getent group wheel | cut -d: -f4
 
 echo -e "\n~~~~~\n"
 
