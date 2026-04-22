@@ -58,5 +58,5 @@ echo -e "\n~~~~~\n"
 
 # Open Ports
 echo "Open Ports"
-sudo ss -tulpn | grep -v "127.0.0.*" | tr -s ' ' | cut -d ' ' -f5 | grep -o ":[0-9]*"
+sudo ss -tulpn | grep -v "127.0.0.*" | tr -s ' ' | cut -d ' ' -f5 | grep -o ":[0-9]+"
 # not yet complete!! so far just displaying ports, and isn't fully parsing correctly yet
