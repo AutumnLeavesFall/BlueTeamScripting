@@ -37,9 +37,15 @@ echo -e "\n~~~~~\n"
 echo "Admin Users:"
 
     #admin users label varies by linux distro
-getent group sudo | cut -d: -f4 
-getent group admin | cut -d: -f4
-getent group wheel | cut -d: -f4
+getent group sudo | cut -d: -f4 | while read -r username; do
+    echo "• $username"
+done
+getent group admin | cut -d: -f4 | while read -r username; do
+    echo "• $username"
+done
+getent group wheel | cut -d: -f4 | while read -r username; do
+    echo "• $username"
+done
 
 echo -e "\n~~~~~\n"
 
@@ -58,5 +64,7 @@ echo -e "\n~~~~~\n"
 
 # Open Ports
 echo "Open Ports"
-sudo ss -tulpn | grep -v "127.0.0.*" | tr -s ' ' | cut -d ' ' -f5 | grep -o ":[0-9]+"
-# not yet complete!! so far just displaying ports, and isn't fully parsing correctly yet
+ss -tulpn | grep -v "127.0.0.*" | tr -s ' ' | cut -d ' ' -f5 | grep -oE ":[0-9]+" | grep -oE "[0-9]+" | while read -r port; do
+    echo "•Port: $port"
+done
+# add the services running on the ports

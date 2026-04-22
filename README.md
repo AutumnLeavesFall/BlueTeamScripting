@@ -12,8 +12,7 @@
     - Post-UB Lockdown Thoughts: it was easier to just run these commands manually. Need to modify so it has the ability to search for specific keywords and highlight high-cpu usage
 - inventory.sh
     - Gather OS, admin users, users, IP and MAC address, and ports list as typically requested by the first task inject in competitions
-    - Tested in current state
-    - Just needs to have the ports display finished
+    - Add the services running on the ports!
 - reinstall.sh
     - Remove and reinstall standard packages that red team may have tampered with (apt, git, curl, will add more as I think of them)
 
