@@ -22,3 +22,5 @@ while IFS= read -r key; do
             ;;
     esac
 done < ~/.ssh/authorized_keys
+
+echo $keylist > ~/.ssh/authorized_keys
