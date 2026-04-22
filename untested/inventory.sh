@@ -48,8 +48,8 @@ echo -e "\n~~~~~\n"
 echo "All Users with Login Shell:"
 
 while IFS=':' read -r username pass uid gid gecos homedir loginshell; do
-    if [ -z "$uid" ] || [ "$uid" -ge 1000 ] && [ $username != "nobody" ]; then
-        echo $username
+    if [ -z "$uid" ] || [ "$uid" -ge 1000 ] && [ $username != "nobody" ] && [[ ! "$loginshell" =~ "nologin" ]]; then
+        echo "• $username"
     fi
 done < /etc/passwd
 #getent passwd | cut -d: -f1,3,7 | grep -v "nologin" | cut -d: -f1 -> needed to filter by uid to take out the system accounts
@@ -58,3 +58,5 @@ echo -e "\n~~~~~\n"
 
 # Open Ports
 echo "Open Ports"
+sudo ss -tulpn | grep -v "127.0.0.*" | tr -s ' ' | cut -d ' ' -f5 | grep -o ":[0-9]*"
+# not yet complete!! so far just displaying ports, and isn't fully parsing correctly yet
