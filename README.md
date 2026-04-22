@@ -14,6 +14,8 @@
     - Gather OS, admin users, users, IP and MAC address, and ports list as typically requested by the first task inject in competitions
     - Tested in current state
     - Just needs to have the ports display finished
+- reinstall.sh
+    - Remove and reinstall standard packages that red team may have tampered with (apt, git, curl, will add more as I think of them)
 
 
 
@@ -34,7 +36,6 @@
 
 
 ## Planned Scripts
-- Remove and reinstall standard packages that red team may have tampered with (git, curl, etc.)
 - Backup important files
 - Set up firewall rules (varies per comp and the organizer's rules but always important) - things like blocking IPs, blocking ports, and removing remote connections - specifically block basically everything but scored services
     - Need to learn how firewall is managed in bash
