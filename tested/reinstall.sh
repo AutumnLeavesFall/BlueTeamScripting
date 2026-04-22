@@ -12,13 +12,13 @@ apt update
 
 echo -e "\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n"
 echo "****REMOVING CURL****"
-apt purge curl
+apt purge curl -y
 echo -e "\n\n****REINSTALLING CURL****"
 apt install curl
 
 echo -e "\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n"
 echo "****REMOVING GIT****"
-apt purge git
+apt purge git -y
 echo -e "\n\n****REINSTALLING GIT****"
 apt install git
 
