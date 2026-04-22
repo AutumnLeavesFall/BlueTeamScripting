@@ -22,6 +22,7 @@
 - ssh_keys.sh
     - Iterate through each key in ~/.ssh/authorized_keys (and known_hosts?) and ask whether to remove them
     - Note: At both competitions I have competed in as of writing this, clearing the ssh keys has kept me from seeing a significant amount of Red Team's malware
+    - Apparently the authorized_keys file has protections specifically to prevent it from being modified by a bash script, so I'm trying to figure out a workaround. Good to know, but I'd still like to be able to automate the process of clearing the file
 - user_group.sh
     - Asks whether to run eval_users.sh
     - Iterates through existing user groups and asks whether to remove them

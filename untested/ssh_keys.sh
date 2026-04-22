@@ -5,8 +5,13 @@ if [ "$(id -u)" -ne 0 ]; then
     echo "ssh_keys.sh run fail"
     exit 1
 fi
-keylist=""
+#keylist=""
+if [ -f ~/.ssh/authorized_keys ]; then
+    echo "file exists"
+    cat ~/.ssh/authorized_keys
+fi
 while IFS= read -r key; do
+    #key=$(echo "$key")
     echo "Key: $key"
     read -p "Remove key? y/n " removekey </dev/tty
     case $removekey in 
@@ -15,7 +20,7 @@ while IFS= read -r key; do
             ;;
         [Nn] )
             echo "Key approved."
-            keylist += $key + "\n"
+            #keylist="$keylist$key\n"
             ;;
         * )
             echo "Invalid response. Please try again"
@@ -23,4 +28,5 @@ while IFS= read -r key; do
     esac
 done < ~/.ssh/authorized_keys
 
-echo $keylist > ~/.ssh/authorized_keys
+
+#echo $keylist > ~/.ssh/authorized_keys
