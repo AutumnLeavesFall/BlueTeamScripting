@@ -28,6 +28,7 @@
 
 
 ## Planned Scripts
+- gather OS, admin users, users, IP and MAC address, and ports list
 - set up firewall rules (varies per comp and the organizer's rules but always important) - things like blocking IPs, blocking ports, and removing remote connections - specifically block basically everything but scored services
     - need to learn how firewall is managed in bash
 - remove autoruns
