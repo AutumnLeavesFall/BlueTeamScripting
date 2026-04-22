@@ -28,15 +28,15 @@
     - Goal: create user groups based on whether to allow/brick
     - Use this to set recognized system users for goal with eval_users.sh
 - user_perms.sh
-    - recursively restrict user perms through directories
+    - Recursively restrict user perms through directories
     - Goal: use user_group.sh to simplify user labeling
 
 
 ## Planned Scripts
 - Remove and reinstall standard packages that red team may have tampered with (git, curl, etc.)
-- backup important files
-- set up firewall rules (varies per comp and the organizer's rules but always important) - things like blocking IPs, blocking ports, and removing remote connections - specifically block basically everything but scored services
-    - need to learn how firewall is managed in bash
-- remove autoruns
-    - need to learn where to access autoruns and what's necessary to remove based on how it's handled
-- set up some kind of logging for information
+- Backup important files
+- Set up firewall rules (varies per comp and the organizer's rules but always important) - things like blocking IPs, blocking ports, and removing remote connections - specifically block basically everything but scored services
+    - Need to learn how firewall is managed in bash
+- Remove autoruns
+    - Need to learn where to access autoruns and what's necessary to remove based on how it's handled
+- Set up some kind of logging for information
