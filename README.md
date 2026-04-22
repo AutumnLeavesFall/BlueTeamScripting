@@ -10,6 +10,11 @@
 - list_processes.sh
     - Currently lists all running processes, asks for a PID, and attempts to kill that process
     - Post-UB Lockdown Thoughts: it was easier to just run these commands manually. Need to modify so it has the ability to search for specific keywords and highlight high-cpu usage
+- inventory.sh
+    - Gather OS, admin users, users, IP and MAC address, and ports list as typically requested by the first task inject in competitions
+    - Tested in current state
+    - Just needs to have the ports display finished
+
 
 
 
@@ -28,7 +33,6 @@
 
 
 ## Planned Scripts
-- gather OS, admin users, users, IP and MAC address, and ports list
 - set up firewall rules (varies per comp and the organizer's rules but always important) - things like blocking IPs, blocking ports, and removing remote connections - specifically block basically everything but scored services
     - need to learn how firewall is managed in bash
 - remove autoruns
