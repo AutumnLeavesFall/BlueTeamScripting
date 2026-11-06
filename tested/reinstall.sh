@@ -10,6 +10,9 @@ echo "****CLEARING APT****"
 apt clean
 apt update
 
+echo "****Reinstall Core Utils****"
+apt reinstall coreutils
+
 echo -e "\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n"
 echo "****REMOVING CURL****"
 apt purge curl -y
